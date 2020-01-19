@@ -10,8 +10,8 @@ output_file = raw_input("Enter output file for checked proxies: ")
 threads = input("Enter number of threads: ")
 timeout = input("Enter the timeout in seconds for a proxy: ")
 
-input = open(input_file, 'r')
-output = open(output_file, 'a')
+input = open(input_file, 'r', 0)
+output = open(output_file, 'a', 0)
 
 queue = Queue.Queue()
 
@@ -31,13 +31,9 @@ class ThreadUrl(threading.Thread):
                			urllib2.install_opener(opener)
                			req = urllib2.Request("http://194.180.224.249")
                			sock=urllib2.urlopen(req, timeout=timeout)
-               			rs = sock.read(1000)
-				total = total + 1
+               			rs = sock.read(5000)
                			if 'this is a working proxy' in rs:
-					found = found + 1
-					print 'Proxy ' + counter + '/' + total + ' found:' + proxy_info
-					output.write(proxy_info)
-					output.flush()
+					output.write(proxy_info + "\n")
 			except:
 				pass
 
@@ -49,9 +45,6 @@ def main():
 		t = ThreadUrl(queue)
 		t.setDaemon(True)
 		t.start()
-
-	found = 0
-	total = 0
 
 	for line in input:
 		queue.put(line.strip())
