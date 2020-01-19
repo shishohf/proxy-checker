@@ -10,6 +10,7 @@ output_file = raw_input("Enter output file for checked proxies: ")
 threads = input("Enter number of threads: ")
 timeout = input("Enter the timeout in seconds for a proxy: ")
 
+input = open(input_file, 'r')
 sys.stdout = open(output_file, 'a')
 
 queue = Queue.Queue()
@@ -33,6 +34,7 @@ class ThreadUrl(threading.Thread):
                			rs = sock.read(1000)
                			if 'this is a working proxy' in rs:
 					print proxy_info
+					sys.stdout.flush()
 			except:
 				pass
 
@@ -45,10 +47,8 @@ def main():
 		t.setDaemon(True)
 		t.start()
 
-	hosts = [host.strip() for host in open(input_file).readlines()]
-
-	for host in hosts:
-		queue.put(host)
+	for line in input:
+		queue.put(line.strip())
 
 	queue.join()
 
