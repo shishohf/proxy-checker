@@ -32,7 +32,7 @@ class ThreadUrl(threading.Thread):
                			req = urllib2.Request("http://194.180.224.249")
                			sock=urllib2.urlopen(req, timeout=timeout)
                			rs = sock.read(5000)
-               			if 'this is a working proxy' in rs:
+               			if 'nigger' in rs:
 					output.write(proxy_info + "\n")
 			except:
 				pass
