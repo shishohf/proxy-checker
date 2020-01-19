@@ -8,11 +8,11 @@ import sys
 input_file = raw_input("Enter proxy file to be checked: ")
 output_file = raw_input("Enter output file for checked proxies: ")
 threads = input("Enter number of threads: ")
+timeout = input("Enter the timeout in seconds for a proxy: ")
 
 sys.stdout = open(output_file, 'a')
 
 queue = Queue.Queue()
-output = []
 
 class ThreadUrl(threading.Thread):
 	def __init__(self, queue):
@@ -29,10 +29,10 @@ class ThreadUrl(threading.Thread):
                			opener.addheaders = [('User-agent','Mozilla/5.0')]
                			urllib2.install_opener(opener)
                			req = urllib2.Request("http://194.180.224.249")
-               			sock=urllib2.urlopen(req, timeout= 7)
+               			sock=urllib2.urlopen(req, timeout=timeout)
                			rs = sock.read(1000)
                			if 'this is a working proxy' in rs:
-					output.append((proxy_info,''))
+					print proxy_info
 			except:
 				pass
 
