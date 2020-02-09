@@ -29,10 +29,10 @@ class ThreadUrl(threading.Thread):
         	       		opener = urllib2.build_opener(proxy_handler)
                			opener.addheaders = [('User-agent','Mozilla/5.0')]
                			urllib2.install_opener(opener)
-               			req = urllib2.Request("http://194.180.224.249")
+               			req = urllib2.Request("https://google.com")
                			sock=urllib2.urlopen(req, timeout=timeout)
                			rs = sock.read(5000)
-               			if 'nigger' in rs:
+               			if '<title>Google</title>' in rs:
 					output.write(proxy_info + "\n")
 			except:
 				pass
